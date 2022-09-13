@@ -3,10 +3,8 @@ const { User } = require("../model/userSchema");
 const bcrypt = require('bcrypt');
 
 const registerController = async (req,res)=>{
-    // console.log(req.body)
     let {username,email,password,confirmPassword} = req.body;
     const errors = validationResult(req);
-    console.log(errors)
 
     if(errors.isEmpty()){
         User.findOne({ email:email},(err,user)=>{
@@ -16,17 +14,7 @@ const registerController = async (req,res)=>{
                     const pass_hash = bcrypt.hashSync(password,salt)
                     password = pass_hash
 
-                    // bcrypt.genSalt(saltRounds, function(err, salt) {
-                    //     bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
-                            // Store hash in your password DB.
-                    //     });
-                    // });
-
-                    
-
-
                     const UserData = new User({username,email,password});
-                    console.log('daddddddd',UserData)
                     UserData.save()
                     .then(data=>{
                         res.status(201).json({
