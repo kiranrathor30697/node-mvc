@@ -1,6 +1,6 @@
-const { User } = require("../model/userSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
+const { User } = require("../../model/userSchema");
 
 const loginControllers = (req, res)=>{
     User.findOne({email: req.body.email})
@@ -15,7 +15,8 @@ const loginControllers = (req, res)=>{
                                         {
                                             email:data.email,
                                             userId:data._id,
-                                            username:data.username
+                                            username:data.username,
+                                            role:data.role
                                         },
                                         process.env.SECRET_KEY,
                                         {
